@@ -53,15 +53,19 @@ public class MainActivity extends AppCompatActivity {
         int rdImage = random.nextInt(5) + 1;
         switch (rdImage) {
             case 1:
-                return R.drawable.d_1;
+                return R.drawable.c_1;
             case 2:
-                return R.drawable.d_2;
+                return R.drawable.c_2;
             case 3:
-                return R.drawable.d_3;
+                return R.drawable.c_3;
             case 4:
-                return R.drawable.d_4;
+                return R.drawable.c_4;
             case 5:
-                return R.drawable.d_5;
+                return R.drawable.c_5;
+            case 6:
+                return R.drawable.c_6;
+            case 7:
+                return R.drawable.c_7;
         }
         return 0;
     }
