@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,27 +48,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         lvContact = findViewById(R.id.lv_contact);
-        adapter = new ArrayAdapter<Contact>(this, 0, 0) {
+        adapter = new ArrayAdapter<Contact>(this, 0, contactDatalist) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                LayoutInflater  inflater    =   (LayoutInflater)    getSystemService(LAYOUT_INFLATER_SERVICE);
-                convertView =   inflater.inflate(R.layout.contact,null);
-                TextView    tvName  =   convertView.findViewById(R.id.tv_name);
-                TextView    tvPhone    =   convertView.findViewById(R.id.tv_phone);
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.contact, null);
+                TextView tvName = convertView.findViewById(R.id.tv_name);
+                TextView tvPhone = convertView.findViewById(R.id.tv_phone);
                 Contact c = contactDatalist.get(position);
                 tvName.setText(c.getName());
                 tvPhone.setText(c.getPhone());
                 return convertView;
             }
-        }; lvContact.setAdapter(adapter);
+        };
+        lvContact.setAdapter(adapter);
+        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Calling(position);
+            }
+        });
+
+    }
+
+    private void Calling(int position) {
+        String phone = contactDatalist.get(position).getPhone();
+        if (!TextUtils.isEmpty(phone)) {
+            String dial = "tel: " + phone;
+            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(dial)));
+        }
+
 
     }
 
     private void addContact() {
         String name = et_Name.getText().toString();
         String phone = et_Phone.getText().toString();
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone)){
-            Toast.makeText(this,"Please enter name and phone number",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone)) {
+            Toast.makeText(this, "Please enter name and phone number", Toast.LENGTH_SHORT).show();
             return;
         }
         Contact c = new Contact();
