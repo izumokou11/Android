@@ -2,8 +2,11 @@ package com.example.phone;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,8 +71,43 @@ public class MainActivity extends AppCompatActivity {
                 Calling(position);
             }
         });
+        lvContact.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                deleteContact(position);
+                return false;
+            }
+        });
+        bt_Dial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String  phoneNo =   et_Name.getText().toString();
+                if (!TextUtils.isEmpty(phoneNo)){
+                    String dial =   "tel: " +   phoneNo;
+                    startActivity(new Intent(Intent.ACTION_DIAL,Uri.parse(dial)));
+                }else {
+                    Toast.makeText(MainActivity.this,"Please enter phone number",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
+
+    private void deleteContact(final int position) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete contact")
+                .setMessage("Do you wan't to delete this contact?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        contactDatalist.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("Cancel", null).show();
+
+    }
+
 
     private void Calling(int position) {
         String phone = contactDatalist.get(position).getPhone();
