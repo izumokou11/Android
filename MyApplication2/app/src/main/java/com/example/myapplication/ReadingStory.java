@@ -25,7 +25,7 @@ public class ReadingStory extends AppCompatActivity {
     @BindView(R.id.tv_read_story)
     TextView tvReadStory;
     @BindView(R.id.tv_description_rd)
-    TextView tvDescritioinRD;
+    TextView tvDescriptionRD;
     @BindView(R.id.iv_back)
     ImageView ivBack;
 
@@ -44,7 +44,7 @@ public class ReadingStory extends AppCompatActivity {
         Glide.with(this).load(DatabaseUtils.getInstance(this).getListTopic().get(position).getImage()).into(ivStoryRD);
         tvStoryNameRD.setText(DatabaseUtils.getInstance(this).getListTopic().get(position).getTitle());
         tvAuthorRD.setText(DatabaseUtils.getInstance(this).getListTopic().get(position).getAuthor());
-        tvDescritioinRD.setText(DatabaseUtils.getInstance(this).getListTopic().get(position).getDescription());
+        tvDescriptionRD.setText(DatabaseUtils.getInstance(this).getListTopic().get(position).getDescription());
     }
 
     @OnClick(R.id.iv_back)
